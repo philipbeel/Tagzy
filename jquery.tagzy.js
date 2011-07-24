@@ -38,18 +38,21 @@
 			$(this).parent().append(tagzy_html);
 			
 			//parse saved tags
-			$.each($(this).val().split(','), function(index, value){
-				//create a close button
-				close = $('<a/>', { href: '#', title: 'delete'}).append('x');
-				//create the tag courier
-				newTag = $('<span/>').addClass('tagged').append( value );
-				//put the tag together with the close button appended
-				$(current_field).next('.tags').append(newTag.append(close));
-				//wipe the text field and refocus
-				$(current_field).next().find('.tagzy_tag').appendTo($(current_field).next('.tags')).val('').focus();
-				//update the hidden field
-				updateTagField($(current_field).next('.tags').attr('data-for'));
-			});
+			var tags = $(this).val().split(',');
+			if(tags.length >1){
+				$.each(tags, function(index, value){
+					//create a close button
+					close = $('<a/>', { href: '#', title: 'delete'}).append('x');
+					//create the tag courier
+					newTag = $('<span/>').addClass('tagged').append( value );
+					//put the tag together with the close button appended
+					$(current_field).next('.tags').append(newTag.append(close));
+					//wipe the text field and refocus
+					$(current_field).next().find('.tagzy_tag').appendTo($(current_field).next('.tags')).val('').focus();
+					//update the hidden field
+					updateTagField($(current_field).next('.tags').attr('data-for'));
+				});
+			}
 
 			//focus input if container is clicked
 			$('.tags').live('click', function(){

@@ -19,9 +19,12 @@
 				data++;
 			else
 				data = 0;
+				
+			//current hidden_field
+			current_field = $(Element);
 			
     	//create tags container
-    	var tagzy_tag = $('<div/>', {'class': 'tags'});
+    	var tagzy_tag = $('<div/>', {'class': 'tags', 'style': 'cursor:text;'});
     	//search an unique identifier for each hidden input
   		tagzy_tag.attr('data-for', data);
   		//save the unique identiver as attribute
@@ -33,8 +36,26 @@
     
 			//append the HTML we need for the tag magic
 			$(this).parent().append(tagzy_html);
+			
+			//parse saved tags
+			$.each($(this).val().split(','), function(index, value){
+				//create a close button
+				close = $('<a/>', { href: '#', title: 'delete'}).append('x');
+				//create the tag courier
+				newTag = $('<span/>').addClass('tagged').append( value );
+				//put the tag together with the close button appended
+				$(current_field).next('.tags').append(newTag.append(close));
+				//wipe the text field and refocus
+				$(current_field).next().find('.tagzy_tag').appendTo($(current_field).next('.tags')).val('').focus();
+				//update the hidden field
+				updateTagField($(current_field).next('.tags').attr('data-for'));
+			});
 
-			$('.tagzy_tag').focus();
+			//focus input if container is clicked
+			$('.tags').live('click', function(){
+				$(this).find('.tagzy_tag').focus();
+			});
+			
 			//check for commas on each keydown
 			$('.tagzy_tag').keyup(function(event) {    
 				var newTag
@@ -61,7 +82,7 @@
 				var tagField = $(this).parent().parent().attr('data-for');
 				$(this).parent().remove(); 
 				updateTagField( tagField );
-				$('input').focus();
+				$(this).parent().parent().find('tagzy_tag').focus();
 			});
 
 			//update the hidden field

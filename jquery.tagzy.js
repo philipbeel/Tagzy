@@ -10,10 +10,14 @@
 (function ($) {
 	$.fn.tagzy = function (options) {
 		
-		var defaults = {};
-    var options = $.extend(defaults, options);
+		settings = {
+			'containerClass': 'tags',
+			'tagClass': 'tagged',
+			'inputClass': 'tagzy_tag'
+		};
+    $.extend(settings, options);
 		
-    return this.each(function (index, Element, options) {
+    return this.each(function (index, Element) {
     	//if plugin is init, set the identifier
     	if(typeof data != "undefined")
 				data++;
@@ -24,13 +28,13 @@
 			current_field = $(Element);
 			
     	//create tags container
-    	var tagzy_tag = $('<div/>', {'class': 'tags', 'style': 'cursor:text;'});
+    	var tagzy_tag = $('<div/>', {'class': settings.containerClass, 'style': 'cursor:text;'});
     	//search an unique identifier for each hidden input
   		tagzy_tag.attr('data-for', data);
   		//save the unique identiver as attribute
   		$(Element).attr('data-tagzy-identifier',data);
     	// create the input
-		  var tagzy_input = $('<input/>', {'type': 'text', 'name': 'tagzy_tag', 'class': 'tagzy_tag'});
+		  var tagzy_input = $('<input/>', {'type': 'text', 'class': settings.inputClass});
 		  //append the input to the container
 			var tagzy_html = tagzy_tag.append(tagzy_input);
     
@@ -44,23 +48,23 @@
 					//create a close button
 					close = $('<a/>', { href: '#', title: 'delete'}).append('x');
 					//create the tag courier
-					newTag = $('<span/>').addClass('tagged').append( value );
+					newTag = $('<span/>').addClass(settings.tagClass).append( value );
 					//put the tag together with the close button appended
-					$(current_field).next('.tags').append(newTag.append(close));
+					$(current_field).next('.' + settings.containerClass).append(newTag.append(close));
 					//wipe the text field and refocus
-					$(current_field).next().find('.tagzy_tag').appendTo($(current_field).next('.tags')).val('').focus();
+					$(current_field).next().find('.' + settings.inputClass).appendTo($(current_field).next('.' + settings.containerClass)).val('').focus();
 					//update the hidden field
-					updateTagField($(current_field).next('.tags').attr('data-for'));
+					updateTagField($(current_field).next('.' + settings.containerClass).attr('data-for'));
 				});
 			}
 
 			//focus input if container is clicked
-			$('.tags').live('click', function(){
-				$(this).find('.tagzy_tag').focus();
+			$('.' + settings.containerClass).live('click', function(){
+				$(this).find('.' + settings.inputClass).focus();
 			});
 			
 			//check for commas on each keydown
-			$('.tagzy_tag').keyup(function(event) {    
+			$('.' + settings.inputClass).keyup(function(event) {    
 				var newTag
 				,	close
 				,	lastTag;
@@ -69,30 +73,30 @@
 					//create a close button
 					close = $('<a/>', { href: '#', title: 'delete'}).append('x');
 					//create the tag courier
-					newTag = $('<span/>').addClass('tagged').append(this.value.substr(0, this.value.length -1) );
+					newTag = $('<span/>').addClass(settings.tagClass).append(this.value.substr(0, this.value.length -1) );
 					//put the tag together with the close button appended
-					$(this).parent('.tags').append(newTag.append(close));
+					$(this).parent('.' + settings.containerClass).append(newTag.append(close));
 					//wipe the text field and refocus
-					$(this).appendTo($(this).parent('.tags')).val('').focus();
+					$(this).appendTo($(this).parent('.' + settings.containerClass)).val('').focus();
 					//update the hidden field
-					updateTagField($(this).parent('.tags').attr('data-for'));
+					updateTagField($(this).parent('.' + settings.containerClass).attr('data-for'));
 				}
 			});
 
 			//close a created tag
-			$('.tags').find('.tagged a').live('click', function(e) {
+			$('.' + settings.containerClass).find('.' + settings.tagClass + ' a').live('click', function(e) {
 				e.preventDefault();
 				var tagField = $(this).parent().parent().attr('data-for');
 				$(this).parent().remove(); 
 				updateTagField( tagField );
-				$(this).parent().parent().find('tagzy_tag').focus();
+				$(this).parent().parent().find('.' + settings.inputClass).focus();
 			});
 
 			//update the hidden field
 			function updateTagField(hidden_input) {
 				var definedTags = ''
 				,	currentTag;
-				$('div[data-for="' + hidden_input + '"]').find('.tagged:not(a)').each(function(index) {
+				$('div[data-for="' + hidden_input + '"]').find('.' + settings.tagClass + ':not(a)').each(function(index) {
 					currentTag = $(this).text();
 					definedTags += currentTag.substring(0, currentTag.length-1) + ',';
 				});
@@ -101,14 +105,14 @@
 			}
 		
 			//check for commas on each keydown
-		  $('.tagzy_tag').keydown(function(event) {    
+		  $('.' + settings.inputClass).keydown(function(event) {    
 				//delete last added tag by hitting backspace
 				if(event.keyCode === 8) {
 					//check the the last character
 					event.preventDefault();
 					 
 					if($(this).val().length === 0) {
-						 $('.tagged:last').remove();
+						 $('.' + settings.tagClass + ':last').remove();
 						 updateTagField($(this).parent().attr('data-for'));        
 					} else {
 						$(this).val($(this).val().slice(0, -1));

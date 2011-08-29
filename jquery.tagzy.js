@@ -43,7 +43,7 @@
 			
 			//parse saved tags
 			var tags = $(this).val().split(',');
-			if(tags.length >1){
+			if(tags.length >=1 & tags[0].length >=1){
 				$.each(tags, function(index, value){
 					//create a close button
 					close = $('<a/>', { href: '#', title: 'delete'}).append('x');

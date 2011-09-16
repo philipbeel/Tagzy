@@ -5,17 +5,21 @@
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) 
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
+ * TODO:If input is not empty, do updateTagField() onSubmit a form
  *
  */
 (function ($) {
 	$.fn.tagzy = function (options) {
-		
-		settings = {
-			'containerClass': 'tags',
-			'tagClass': 'tagged',
-			'inputClass': 'tagzy_tag'
-		};
-    $.extend(settings, options);
+		//define defaults
+		$(this).data('tagzy', {
+    	settings : {
+				"containerClass": "tags",
+				"tagClass": "tagged",
+				"inputClass": "tagzy_tag"
+			},
+			current_field : $(Element)
+    });
+    var settings = $.extend($(this).data('tagzy').settings, options);
 		
     return this.each(function (index, Element) {
     	//if plugin is init, set the identifier
@@ -23,9 +27,6 @@
 				data++;
 			else
 				data = 0;
-				
-			//current hidden_field
-			current_field = $(Element);
 			
     	//create tags container
     	var tagzy_tag = $('<div/>', {'class': settings.containerClass, 'style': 'cursor:text;'});
@@ -50,11 +51,11 @@
 					//create the tag courier
 					newTag = $('<span/>').addClass(settings.tagClass).append( value );
 					//put the tag together with the close button appended
-					$(current_field).next('.' + settings.containerClass).append(newTag.append(close));
+					$(Element).next('.' + settings.containerClass).append(newTag.append(close));
 					//wipe the text field and refocus
-					$(current_field).next().find('.' + settings.inputClass).appendTo($(current_field).next('.' + settings.containerClass)).val('').focus();
+					$(Element).next().find('.' + settings.inputClass).appendTo($(Element).next('.' + settings.containerClass)).val('').focus();
 					//update the hidden field
-					updateTagField($(current_field).next('.' + settings.containerClass).attr('data-for'));
+					updateTagField($(Element).next('.' + settings.containerClass).attr('data-for'));
 				});
 			}
 

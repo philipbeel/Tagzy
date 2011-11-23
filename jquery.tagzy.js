@@ -40,7 +40,7 @@
 			var tagzy_html = tagzy_tag.append(tagzy_input);
     
 			//append the HTML we need for the tag magic
-			$(this).parent().append(tagzy_html);
+			$(this).after(tagzy_html);
 			
 			//parse saved tags
 			var tags = $(this).val().split(',');
@@ -68,13 +68,16 @@
 			$('.' + settings.inputClass).keyup(function(event) {    
 				var newTag
 				,	close
-				,	lastTag;
+				,	lastTag
+				,   substrVal;
+				
 				//check for comma delimeter on keypresses
-				if((this.value.substr(-1) === ',') && (this.value.length !== 1)) {
+				if((this.value.substr(-1) === ',' || event.keyCode === 13) && (this.value.length !== 1)) {
 					//create a close button
 					close = $('<a/>', { href: '#', title: 'delete'}).append('x');
 					//create the tag courier
-					newTag = $('<span/>').addClass(settings.tagClass).append(this.value.substr(0, this.value.length -1) );
+					substrVal = (this.value.substr(-1) === ',') ? 1 : 0;
+					newTag = $('<span/>').addClass(settings.tagClass).append(this.value.substr(0, this.value.length - substrVal));
 					//put the tag together with the close button appended
 					$(this).parent('.' + settings.containerClass).append(newTag.append(close));
 					//wipe the text field and refocus
@@ -106,12 +109,14 @@
 			}
 		
 			//check for commas on each keydown
-		  $('.' + settings.inputClass).keydown(function(event) {    
+		  $('.' + settings.inputClass).keydown(function(event) {
+                if(event.keyCode === 8 || event.keyCode === 13) {
+                    event.preventDefault();
+                }
+                
 				//delete last added tag by hitting backspace
 				if(event.keyCode === 8) {
-					//check the the last character
-					event.preventDefault();
-					 
+					//check the the last character 
 					if($(this).val().length === 0) {
 						 $('.' + settings.tagClass + ':last').remove();
 						 updateTagField($(this).parent().attr('data-for'));        

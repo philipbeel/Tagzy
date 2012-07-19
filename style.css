@@ -1,4 +1,4 @@
-body{font-family:helvetica-neue, helvetica,arial;background:url('bg.png') repeat;text-shadow: 0 1px 0 #FFFFFF;}
+body{font-family:helvetica-neue, helvetica,arial;background:#e9e4e0;text-shadow: 0 1px 0 #FFFFFF;}
 #main{width:500px; margin:50px auto;}
 #main h1 {color: #27211A;font-size: 26px;line-height: 1;margin-bottom: 15px;}
 #main p {color:#342e27;line-height:150%;}

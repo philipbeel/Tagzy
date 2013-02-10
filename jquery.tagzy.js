@@ -11,31 +11,31 @@
 	$.fn.tagzy = function (options) {
 		
 		$(this).data('tagzy', {
-    		settings : {
+			settings : {
 				"containerClass": "tags",
 				"tagClass": "tagged",
 				"inputClass": "tagzy_tag"
 			},
 			current_field : $(Element)
-    	});
-    
-    	var settings = $.extend($(this).data('tagzy').settings, options);
+		});
+	
+		var settings = $.extend($(this).data('tagzy').settings, options);
 		
-	    return this.each(function (index, Element) {
-	    	
-	    	var data = (typeof data !== "undefined") ? data++ : data = 0
-	    	,	tagzy_tag = $('<div/>', {'class': settings.containerClass, 'style': 'cursor:text;'});
+		return this.each(function (index, Element) {
+			
+			var data = (typeof data !== "undefined") ? data++ : data = 0
+			,	tagzy_tag = $('<div/>', {'class': settings.containerClass, 'style': 'cursor:text;'});
 
-	    	// Search an unique identifier for each hidden input
-	  		tagzy_tag.attr('data-for', data);
-	  		
-	  		// Save the unique identiver as attribute
-	  		$(Element).attr('data-tagzy-identifier',data);
-	    	
-	    	// Create the input
+			// Search an unique identifier for each hidden input
+			tagzy_tag.attr('data-for', data);
+			
+			// Save the unique identiver as attribute
+			$(Element).attr('data-tagzy-identifier',data);
+			
+			// Create the input
 			var tagzy_input = $('<input/>', {'type': 'text', 'class': settings.inputClass})
 			,	tagzy_html = tagzy_tag.append(tagzy_input);
-    
+	
 			// Append the HTML we need for the tag magic
 			$(this).after(tagzy_html);
 			
@@ -121,17 +121,17 @@
 			// Check for commas on each keydown
 			$('.' + settings.inputClass).keydown(function(event) {
 
-		  		// Stop default functionality
-                if(event.keyCode === 8 || event.keyCode === 13) {
-                    event.preventDefault();
-                }
-                
+				// Stop default functionality
+				if(event.keyCode === 8 || event.keyCode === 13) {
+					event.preventDefault();
+				}
+				
 				// Delete last added tag by hitting backspace
 				if(event.keyCode === 8) {
 
 					if($(this).val().length === 0) {
-						 $('.' + settings.tagClass + ':last').remove();
-						 updateTagField($(this).parent().attr('data-for'));        
+						$('.' + settings.tagClass + ':last').remove();
+						updateTagField($(this).parent().attr('data-for'));        
 					} else {
 						$(this).val($(this).val().slice(0, -1));
 					}

@@ -2,7 +2,7 @@ Tagzy - A jQuery plugin for adding tags to an input
 ========================================================
 
 GitHub  : https://github.com/philipbeel/Tagzy<br/>
-Demo    : http://theodin.co.uk/plugins/jquery/tagzy/tagzy.html<br/>
+Demo    : http://plugins.theodin.co.uk/tagzy/demo/<br/>
 Website : http://theodin.co.uk<br/>
 Email   : contact@theodin.co.uk<br/>
 Twitter : @philipbeel<br/>

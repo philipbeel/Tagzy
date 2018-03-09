@@ -1,11 +1,7 @@
-Tagzy - A jQuery plugin for adding tags to an input
-========================================================
+# Tagzy - A jQuery plugin for adding tags to an input
 
-GitHub  : https://github.com/philipbeel/Tagzy<br/>
-Demo    : http://plugins.theodin.co.uk/tagzy/demo/<br/>
-Website : http://theodin.co.uk<br/>
-Email   : contact@theodin.co.uk<br/>
-Twitter : @philipbeel<br/>
+Website : [http://theodin.co.uk](https://twitter.com/philipbeel)  
+Twitter : [@philipbeel](https://twitter.com/philipbeel)
 
 ### Descrpition
 Tagzy is a jQuery plugin which enables you to add a highly visual tag input to any web page quickly and easily. If you have ever signed up for soundcloud or forrst you may have already encountered this approach.
@@ -27,7 +23,8 @@ Initiate the plugin, call tagzy on your specified element.
 
 ### Plugin parameters
 
->containerClass{String},     // Name of the tagzy container class <br/>
->tagClass: {String},     	 // Name of the class appended to each tagged item <br/>
->inputClass: {String},       // Name of the class appended to the input <br/>
-
+```
+containerClass{String},     // Name of the tagzy container class 
+tagClass: {String},     	 // Name of the class appended to each tagged item 
+inputClass: {String},       // Name of the class appended to the input 
+```
